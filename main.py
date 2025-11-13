@@ -1,14 +1,16 @@
+
+
 from bakery import assert_equal
 from drafter import *
 from dataclasses import dataclass
 
 set_site_information(
-    author="your_email@udel.edu",
+    author="dtanuj@udel.edu",
     description="""A brief description of what your website does.
     Use a triple quoted string if you want to span multiple lines.""",
-    sources=["List any help resources or sources you used"],
-    planning=["your_planning_document.pdf"],
-    links=["https://github.com/your-username/your-repo"]
+    sources=["N/A Right now but will add when I do"],
+    planning=["Project_planning.pdf"],
+    links=["https://github.com/UD-F25-CS1/cs1-website-f25-TanujDontaraju, Youtubelink""]
 )
 hide_debug_information()
 set_website_title("Your Website Title")
