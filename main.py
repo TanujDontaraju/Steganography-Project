@@ -194,4 +194,37 @@ green_vals = get_color_values(teacher_img, 1)
 
 print("Message hidden in file: " , get_encoded_message(green_vals))
 
-start_server(State())
+@dataclass
+class State: 
+    image: PIL_Image
+    message: str
+    
+@route
+def index(state: State) -> Page:
+    return Page(state, [
+        "Upload a PNG image to decrypt",       
+        FileUpload("img", accept="image/png"),
+        Button("Next", display_image)
+        ])
+
+@route
+def display_image(state : State, new_image: bytes) -> Page:
+    state.image = PIL_Image.open(io.BytesIO(new_image)).convert('RGB')
+
+    return Page(state, [
+        Image(state.image),
+        Button("Decrypt", decrypt),
+        Button("Back", index)
+        ])
+
+@route
+def decrypt(state: State) -> Page:
+    if state.image == None:
+        return Page(state, ["No image uploaded.", Button("Back", index)])
+    green_vals = get_color_values(state.image, 1)
+    state.message = get_encoded_message(green_vals)
+    return Page(state, ["Decrypted message:",
+                        state.message,
+                        Button("Back", index)])
+
+start_server(State(None, None)) 
