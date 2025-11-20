@@ -187,13 +187,7 @@ def get_color_values(image: PIL_Image.Image, channel_index: int) -> list[int]:
             color_values.append(pixel[channel_index])
     
     return color_values
-
-assert_equal(get_color_values(teacher_img,0)[58660], 0)
-
-green_vals = get_color_values(teacher_img, 1)
-
-print("Message hidden in file: " , get_encoded_message(green_vals))
-
+    
 @dataclass
 class State: 
     image: PIL_Image
@@ -227,4 +221,4 @@ def decrypt(state: State) -> Page:
                         state.message,
                         Button("Back", index)])
 
-start_server(State(None, None)) 
+start_server(State(None, "")) 
