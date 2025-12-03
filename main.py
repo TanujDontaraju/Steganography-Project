@@ -1,10 +1,9 @@
+# ----- All important import statements -----
 from bakery import assert_equal
-from drafter import *
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from PIL import Image as PIL_Image
-import tkinter as tk
-from tkinter import filedialog
-import os
+from drafter import *
+import io
 
 set_site_information(
     author="dtanuj@udel.edu",
