@@ -347,3 +347,163 @@ result_img = hide_bits(test_img_hide, binary_to_hide)
 assert_equal(result_img.getpixel((0, 0))[0], 11)
 assert_equal(result_img.getpixel((1, 0))[0], 10)
 
+# ----- Start of drafter code -----
+@dataclass
+class State:
+    """Stores the application's state."""
+    input_image: PIL_Image = None
+    secret_message: str = ""
+    output_image: PIL_Image = None
+    output_message: str = ""
+    history: list[str] = field(default_factory=list)
+
+@route
+def index(state: State) -> Page:
+    """Main welcome page (Start of the flowchart)"""
+    state.input_image = None
+    state.secret_message = ""
+    state.output_image = None
+    state.output_message = ""
+    
+    return Page(state, [
+        "Welcome! Please choose a mode:",
+        Button("Encrypt", set_mode_encrypt),
+        Button("Decrypt", set_mode_decrypt)
+    ])
+
+@route
+def set_mode_encrypt(state: State) -> Page:
+    """Displays the page for encryption inputs."""
+    return Page(state, [
+        "Encrypt Mode",
+        "1. Select an image (PNG):",
+        FileUpload("encrypt_image", accept="image/png"),
+        "2. Enter your secret message:",
+        TextBox("secret_message_text", placeholder="Type message here..."),
+        Button("Confirm Encrypt", run_encryption),
+        Button("Back", index)
+    ])
+
+@route
+def set_mode_decrypt(state: State) -> Page:
+    """Displays the page for decryption inputs."""
+    return Page(state, [
+        "Decrypt Mode",
+        "1. Select an image (PNG) to decode:",
+        FileUpload("decrypt_image", accept="image/png"),
+        Button("Confirm Decrypt", run_decryption),
+        Button("Back", index)
+    ])
+
+@route
+def run_encryption(state: State, encrypt_image: bytes, secret_message_text: str) -> Page:
+    """Processes the image and message for encryption AND displays the result."""
+    if not encrypt_image:
+        return Page(state, [
+            "Error: No image selected.",
+            Button("Back", set_mode_encrypt)
+        ])
+        
+    state.input_image = PIL_Image.open(io.BytesIO(encrypt_image)).convert('RGB')
+    state.secret_message = secret_message_text
+    
+    full_message_str = prepend_header(state.secret_message)
+    binary_data = message_to_binary(full_message_str)
+    
+    max_bits = state.input_image.width * state.input_image.height
+    if len(binary_data) > max_bits:
+        return Page(state, [
+            "Error: Message is too long for this image.",
+            Button("Back", set_mode_encrypt)
+        ])
+
+    state.output_image = hide_bits(state.input_image, binary_data)
+    
+    state.history.append("Encrypted message: " + secret_message_text)
+    
+    return Page(state, [
+        "Final Encrypt: Success!",
+        "Here is your new image:",
+        Image(state.output_image),
+        Button("Try again?", index)
+    ])
+
+@route
+def run_decryption(state: State, decrypt_image: bytes) -> Page:
+    """Processes the image for decryption AND displays the result."""
+    if not decrypt_image:
+        return Page(state, [
+            "Error: No image selected.",
+            Button("Back", set_mode_decrypt)
+        ])
+        
+    state.input_image = PIL_Image.open(io.BytesIO(decrypt_image)).convert('RGB')
+    
+    red_values = get_color_values(state.input_image, 0)
+    state.output_message = get_encoded_message(red_values)
+    
+    state.history.append("Decrypted message: " + state.output_message)
+    
+    return Page(state, [
+        "Final Decrypt: Success!",
+        f"Decrypted Message: {state.output_message}",
+        Button("Try again?", index)
+    ])
+
+test_state = State()
+test_page = index(test_state)
+assert_equal(test_page.content, [
+    "Welcome! Please choose a mode:",
+    Button("Encrypt", set_mode_encrypt),
+    Button("Decrypt", set_mode_decrypt)
+])
+
+test_page = set_mode_encrypt(test_state)
+assert_equal(test_page.content, [
+    "Encrypt Mode",
+    "1. Select an image (PNG):",
+    FileUpload("encrypt_image", accept="image/png"),
+    "2. Enter your secret message:",
+    TextBox("secret_message_text", placeholder="Type message here..."),
+    Button("Confirm Encrypt", run_encryption),
+    Button("Back", index)
+])
+
+test_page = set_mode_decrypt(test_state)
+assert_equal(test_page.content, [
+    "Decrypt Mode",
+    "1. Select an image (PNG) to decode:",
+    FileUpload("decrypt_image", accept="image/png"),
+    Button("Confirm Decrypt", run_decryption),
+    Button("Back", index)
+])
+
+temp_img = PIL_Image.new('RGB', (10, 10), color='white')
+temp_buffer = io.BytesIO()
+temp_img.save(temp_buffer, format='PNG')
+fake_png_bytes = temp_buffer.getvalue()
+
+test_page = run_encryption(test_state, fake_png_bytes, "Hi")
+
+assert_equal(test_page.content, [
+    "Final Encrypt: Success!",
+    "Here is your new image:",
+    Image(test_state.output_image),
+    Button("Try again?", index)
+])
+assert_equal(test_state.history[-1], "Encrypted message: Hi")
+
+temp_buffer_out = io.BytesIO()
+test_state.output_image.save(temp_buffer_out, format='PNG')
+encrypted_bytes = temp_buffer_out.getvalue()
+
+test_page = run_decryption(test_state, encrypted_bytes)
+
+assert_equal(test_page.content, [
+    "Final Decrypt: Success!",
+    "Decrypted Message: Hi",
+    Button("Try again?", index)
+])
+assert_equal(test_state.history[-1], "Decrypted message: Hi")
+
+start_server(State())
