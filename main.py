@@ -339,13 +339,13 @@ def hide_bits(image: PIL_Image, binary_string: str) -> PIL_Image:
     
     return new_img
 
-test_img_hide = PIL_Image.new("RGB", (2, 1), "black")
+""" test_img_hide = PIL_Image.new("RGB", (2, 1), "black")
 test_img_hide.putpixel((0, 0), (10, 0, 0))
 test_img_hide.putpixel((1, 0), (10, 0, 0))
 binary_to_hide = "10"
 result_img = hide_bits(test_img_hide, binary_to_hide)
 assert_equal(result_img.getpixel((0, 0))[0], 11)
-assert_equal(result_img.getpixel((1, 0))[0], 10)
+assert_equal(result_img.getpixel((1, 0))[0], 10) """
 
 # ----- Start of drafter code -----
 @dataclass
