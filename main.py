@@ -478,10 +478,10 @@ assert_equal(test_page.content, [
     Button("Back", index)
 ])
 
-temp_img = PIL_Image.new('RGB', (10, 10), color='white')
+"""temp_img = PIL_Image.new('RGB', (10, 10), color='white')
 temp_buffer = io.BytesIO()
 temp_img.save(temp_buffer, format='PNG')
-fake_png_bytes = temp_buffer.getvalue()
+fake_png_bytes = temp_buffer.getvalue()"""
 
 test_page = run_encryption(test_state, fake_png_bytes, "Hi")
 
