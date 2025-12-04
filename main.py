@@ -311,7 +311,7 @@ def hide_bits(image: PIL_Image, binary_string: str) -> PIL_Image:
     """
     Hides binary string inside image by modifying least significant bit of red channel of each pixel as it doens't make too much of a difference
     in color picture
-     
+      
     Args:
         image (PIL_Image): Pillow image in RGB mode where message whill be hidden
         binary_string (str): String of 0 and 1 representing the bits
@@ -329,16 +329,16 @@ def hide_bits(image: PIL_Image, binary_string: str) -> PIL_Image:
             if index >= len(binary_string):
                 return new_img
             
-            r, g, b = new_img.getpixel((x, y))
+            pixel = list(new_img.getpixel((x, y)))
             
             if index < len(binary_string):
-                r = new_color_value(r, binary_string[index])
-                index +=1
+                pixel[0] = new_color_value(pixel[0], binary_string[index])
+                index += 1
             
-            new_img.putpixel((x, y), (r, g, b))
+            new_img.putpixel((x, y), tuple(pixel))
     
     return new_img
-
+    
 """ test_img_hide = PIL_Image.new("RGB", (2, 1), "black")
 test_img_hide.putpixel((0, 0), (10, 0, 0))
 test_img_hide.putpixel((1, 0), (10, 0, 0))
