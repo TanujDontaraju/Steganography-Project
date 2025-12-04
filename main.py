@@ -424,6 +424,7 @@ def run_encryption(state: State, encrypt_image: bytes, secret_message_text: str)
     return Page(state, [
         "Final Encrypt: Success!",
         "Here is your new image:",
+        "Right click on the image and select 'Save As' to save the new encrypted image", 
         Image(state.output_image),
         Button("Try again?", index)
     ])
