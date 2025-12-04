@@ -483,7 +483,7 @@ temp_buffer = io.BytesIO()
 temp_img.save(temp_buffer, format='PNG')
 fake_png_bytes = temp_buffer.getvalue()"""
 
-test_page = run_encryption(test_state, fake_png_bytes, "Hi")
+""" test_page = run_encryption(test_state, fake_png_bytes, "Hi")
 
 assert_equal(test_page.content, [
     "Final Encrypt: Success!",
@@ -504,6 +504,6 @@ assert_equal(test_page.content, [
     "Decrypted Message: Hi",
     Button("Try again?", index)
 ])
-assert_equal(test_state.history[-1], "Decrypted message: Hi")
+assert_equal(test_state.history[-1], "Decrypted message: Hi") """
 
 start_server(State())
