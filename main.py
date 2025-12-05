@@ -477,32 +477,4 @@ assert_equal(test_page.content, [
     Button("Back", index)
 ])
 
-"""temp_img = PIL_Image.new('RGB', (10, 10), color='white')
-temp_buffer = io.BytesIO()
-temp_img.save(temp_buffer, format='PNG')
-fake_png_bytes = temp_buffer.getvalue()"""
-
-""" test_page = run_encryption(test_state, fake_png_bytes, "Hi")
-
-assert_equal(test_page.content, [
-    "Final Encrypt: Success!",
-    "Here is your new image:",
-    Image(test_state.output_image),
-    Button("Try again?", index)
-])
-assert_equal(test_state.history[-1], "Encrypted message: Hi")
-
-temp_buffer_out = io.BytesIO()
-test_state.output_image.save(temp_buffer_out, format='PNG')
-encrypted_bytes = temp_buffer_out.getvalue()
-
-test_page = run_decryption(test_state, encrypted_bytes)
-
-assert_equal(test_page.content, [
-    "Final Decrypt: Success!",
-    "Decrypted Message: Hi",
-    Button("Try again?", index)
-])
-assert_equal(test_state.history[-1], "Decrypted message: Hi") """
-
 start_server(State())
