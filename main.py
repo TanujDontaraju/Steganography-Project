@@ -13,7 +13,7 @@ set_site_information(
                     part lets the user decrypt an image which has a secret message in it. """,
     sources=["https://www.w3schools.com/python/default.asp"],
     planning=["Project_planning.pdf"],
-    links=["https://github.com/UD-F25-CS1/cs1-website-f25-TanujDontaraju, https://drive.google.com/file/d/1lXhfJjjUPpIWFmqt6SJcOlpypkk5CnlA/view?usp=sharing""]
+    links=["https://github.com/UD-F25-CS1/cs1-website-f25-TanujDontaraju, https://drive.google.com/file/d/1lXhfJjjUPpIWFmqt6SJcOlpypkk5CnlA/view?usp=sharing"]
 )
 hide_debug_information()
 set_website_title("Pixel Parse")
