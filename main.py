@@ -356,7 +356,6 @@ class State:
     output_image: PIL_Image = None
     output_message: str = ""
     history: list[str] = field(default_factory=list)
-    encryption_verified: bool = False
 
 @route
 def index(state: State) -> Page:
@@ -381,7 +380,6 @@ def set_mode_encrypt(state: State) -> Page:
         FileUpload("encrypt_image", accept="image/png"),
         "2. Enter your secret message:",
         TextBox("secret_message_text", placeholder="Type message here..."),
-        CheckBox("encryption_verified", "I can confirm I wnat to modify this image"),
         Button("Confirm Encrypt", run_encryption),
         Button("Back", index)
     ])
