@@ -14,11 +14,7 @@ set_site_information(
     links=["https://github.com/UD-F25-CS1/cs1-website-f25-TanujDontaraju, Youtubelink""]
 )
 hide_debug_information()
-set_website_title("Your Website Title")
-set_website_framed(False)
-
-hide_debug_information()
-set_website_title("Your Drafter Website")
+set_website_title("Pixel Parse")
 set_website_framed(False)
 
 
