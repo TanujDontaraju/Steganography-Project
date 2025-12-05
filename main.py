@@ -7,11 +7,13 @@ import io
 
 set_site_information(
     author="dtanuj@udel.edu",
-    description="""A brief description of what your website does.
-    Use a triple quoted string if you want to span multiple lines.""",
-    sources=["N/A Right now but will add when I do"],
+    description=""" My website is the Stegnography website, where I made a website which encodes
+                    and decodes images. The encoding / encrytpion lets the user select an image, 
+                    where they can write a secret message into the image and save it. The decoding / decryption
+                    part lets the user decrypt an image which has a secret message in it. """,
+    sources=["https://www.w3schools.com/python/default.asp"],
     planning=["Project_planning.pdf"],
-    links=["https://github.com/UD-F25-CS1/cs1-website-f25-TanujDontaraju, Youtubelink""]
+    links=["https://github.com/UD-F25-CS1/cs1-website-f25-TanujDontaraju, https://drive.google.com/file/d/1lXhfJjjUPpIWFmqt6SJcOlpypkk5CnlA/view?usp=sharing""]
 )
 hide_debug_information()
 set_website_title("Pixel Parse")
