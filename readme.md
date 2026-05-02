@@ -2,7 +2,7 @@
 
 Pixel Parse is a steganography web application that allows you to hide and reveal secret messages within images. It provides an intuitive interface to encode text into a PNG image and decode hidden messages from previously encoded images. 
 
-🌐 **Live Website:** [Pixel Parse on GitHub Pages](https://ud-f25-cs1.github.io/cs1-website-f25-TanujDontaraju/)
+🌐 [**View my project!**](https://ud-f25-cs1.github.io/cs1-website-f25-TanujDontaraju/)
 
 ## ✨ Features
 
